@@ -1,10 +1,20 @@
-# A statically generated blog example using Next.js and Sanity
+# OdV2 - Modern Blog Platform
 
 ![Screenshot of Sanity Studio using Presentation Tool to do Visual Editing](https://github.com/sanity-io/next.js/assets/81981/59ecd9d6-7a78-41c6-95f7-275f66fe3c9d)
 
-This starter is a statically generated blog that uses Next.js App Router for the frontend and [Sanity][sanity-homepage] to handle its content. It comes with a native Sanity Studio that offers features like real-time collaboration and visual editing with live updates using [Presentation][presentation].
+**A WordPress replacement built with Next.js and Sanity CMS**
 
-The Studio connects to Sanity Content Lake, which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more. You can use this starter to kick-start a blog or learn these technologies.
+This is a statically generated blog that uses Next.js App Router for the frontend and [Sanity][sanity-homepage] to handle its content. It comes with a native Sanity Studio that offers features like real-time collaboration and visual editing with live updates using [Presentation][presentation].
+
+The Studio connects to Sanity Content Lake, which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more.
+
+## 📚 Project Documentation
+
+- **[QUICKSTART.md](./QUICKSTART.md)** - Get up and running in 5 minutes
+- **[ROADMAP.md](./ROADMAP.md)** - Complete project roadmap with implementation phases
+- **[TECHNICAL_ASSESSMENT.md](./TECHNICAL_ASSESSMENT.md)** - Detailed technical analysis and architecture review
+
+**New to this project?** Start with [QUICKSTART.md](./QUICKSTART.md) for setup instructions.
 
 ## Features
 
