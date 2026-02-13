@@ -13,8 +13,11 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 - **[QUICKSTART.md](./QUICKSTART.md)** - Get up and running in 5 minutes
 - **[ROADMAP.md](./ROADMAP.md)** - Complete project roadmap with implementation phases
 - **[TECHNICAL_ASSESSMENT.md](./TECHNICAL_ASSESSMENT.md)** - Detailed technical analysis and architecture review
+- **[FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md)** - Next.js vs lighter alternatives (Astro, SvelteKit, Preact)
 
 **New to this project?** Start with [QUICKSTART.md](./QUICKSTART.md) for setup instructions.
+
+**Concerned about Next.js bundle size?** Read [FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md) for a detailed comparison with lighter frameworks and optimization strategies.
 
 ## Features
 

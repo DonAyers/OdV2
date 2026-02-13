@@ -36,6 +36,20 @@ This project is a **modern, serverless blog replacement** for a WordPress blog, 
 6. **Generous Free Tier** - Sanity: 3 users, 100k documents, 5GB assets free
 7. **Modern Developer Experience** - TypeScript, Git-based workflow, React components
 
+### 📦 Framework Weight Considerations
+
+**Bundle Size:** Next.js ships ~85-90KB gzipped JavaScript to the client (vs ~500KB-2MB for typical WordPress).
+
+**Is Next.js "heavy"?** Compared to ultra-lightweight alternatives (Astro ~5KB, SvelteKit ~40KB), yes. But the trade-offs heavily favor Next.js for this use case:
+- ✅ Best-in-class Sanity integration (visual editing, real-time preview)
+- ✅ Zero-config SSG/SSR/ISR (just works)
+- ✅ Mature ecosystem with proven reliability
+- ✅ Can be optimized to ~50-60KB by removing unused dependencies
+
+**Alternatives analyzed:** See [FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md) for detailed comparison of Astro, SvelteKit, Preact, and others.
+
+**Recommendation:** Stick with Next.js unless sub-50KB bundle is a hard requirement. The extra 40-50KB buys you significantly better DX and Sanity integration.
+
 ---
 
 ## Current Implementation Status
@@ -79,6 +93,31 @@ This project is a **modern, serverless blog replacement** for a WordPress blog, 
 ---
 
 ## Implementation Phases
+
+### Phase 0: Quick Wins & Optimization (Optional, 2-4 hours)
+**Goal:** Reduce bundle size and improve performance with minimal effort
+
+#### 0.1 Bundle Size Optimization
+**Effort:** 2-3 hours  
+**Tasks:**
+- [ ] Remove unused dependencies (`styled-components`, `rxjs` if not used)
+- [ ] Add dynamic imports for heavy components
+- [ ] Install and configure `@next/bundle-analyzer`
+- [ ] Analyze bundle and identify large dependencies
+- [ ] Configure tree-shaking for optimal builds
+
+**Expected Result:**
+- Reduce bundle from ~90KB to ~50-60KB (33% lighter)
+- Faster page loads and better Lighthouse scores
+
+**Success Criteria:**
+- Bundle analyzer shows no large unused dependencies
+- Initial JavaScript load under 60KB gzipped
+- Lighthouse performance score 95+
+
+**Note:** This phase is optional but recommended if bundle size is a concern. See [FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md) for comparison with other frameworks.
+
+---
 
 ### Phase 1: Critical WordPress Parity (Week 1-2)
 **Goal:** Match core WordPress functionality
