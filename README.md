@@ -6,6 +6,17 @@
 
 This is a statically generated blog that uses Next.js App Router for the frontend and [Sanity][sanity-homepage] to handle its content. It comes with a native Sanity Studio that offers features like real-time collaboration and visual editing with live updates using [Presentation][presentation].
 
+## 🚀 Quick Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DonAyers/OdV2)
+
+**Or use the automated setup script:**
+```bash
+./setup-vercel.sh
+```
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete deployment guide.
+
 ## 🚀 Ready to Get Started?
 
 **→ Read [GETTING_STARTED.md](./GETTING_STARTED.md) for everything you need to get cracking on this project!**
@@ -24,12 +35,15 @@ Then visit:
 ## 📚 Project Documentation
 
 - **[GETTING_STARTED.md](./GETTING_STARTED.md)** - 🎯 **START HERE!** Complete setup guide with checklist
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - 🚀 Deploy to Vercel guide with automation scripts
 - **[QUICKSTART.md](./QUICKSTART.md)** - Quick 5-minute reference for setup commands
 - **[ROADMAP.md](./ROADMAP.md)** - Complete project roadmap with implementation phases (4-6 weeks)
 - **[TECHNICAL_ASSESSMENT.md](./TECHNICAL_ASSESSMENT.md)** - Detailed technical analysis and architecture review
 - **[FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md)** - Next.js vs lighter alternatives (Astro, SvelteKit, Preact)
 
 **New to this project?** Start with [GETTING_STARTED.md](./GETTING_STARTED.md) - it has everything you need!
+
+**Ready to deploy?** Follow [DEPLOYMENT.md](./DEPLOYMENT.md) for step-by-step Vercel deployment.
 
 **Concerned about Next.js bundle size?** Read [FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md) for a detailed comparison with lighter frameworks and optimization strategies.
 
