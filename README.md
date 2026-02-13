@@ -6,16 +6,30 @@
 
 This is a statically generated blog that uses Next.js App Router for the frontend and [Sanity][sanity-homepage] to handle its content. It comes with a native Sanity Studio that offers features like real-time collaboration and visual editing with live updates using [Presentation][presentation].
 
-The Studio connects to Sanity Content Lake, which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more.
+## 🚀 Ready to Get Started?
+
+**→ Read [GETTING_STARTED.md](./GETTING_STARTED.md) for everything you need to get cracking on this project!**
+
+Quick commands to get running:
+```bash
+npm install           # Install dependencies (~2 minutes)
+npm run setup         # Configure Sanity project (interactive)
+npm run dev           # Start development server
+```
+
+Then visit:
+- **Blog:** http://localhost:3000
+- **CMS Admin:** http://localhost:3000/studio
 
 ## 📚 Project Documentation
 
-- **[QUICKSTART.md](./QUICKSTART.md)** - Get up and running in 5 minutes
-- **[ROADMAP.md](./ROADMAP.md)** - Complete project roadmap with implementation phases
+- **[GETTING_STARTED.md](./GETTING_STARTED.md)** - 🎯 **START HERE!** Complete setup guide with checklist
+- **[QUICKSTART.md](./QUICKSTART.md)** - Quick 5-minute reference for setup commands
+- **[ROADMAP.md](./ROADMAP.md)** - Complete project roadmap with implementation phases (4-6 weeks)
 - **[TECHNICAL_ASSESSMENT.md](./TECHNICAL_ASSESSMENT.md)** - Detailed technical analysis and architecture review
 - **[FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md)** - Next.js vs lighter alternatives (Astro, SvelteKit, Preact)
 
-**New to this project?** Start with [QUICKSTART.md](./QUICKSTART.md) for setup instructions.
+**New to this project?** Start with [GETTING_STARTED.md](./GETTING_STARTED.md) - it has everything you need!
 
 **Concerned about Next.js bundle size?** Read [FRAMEWORK_ALTERNATIVES.md](./FRAMEWORK_ALTERNATIVES.md) for a detailed comparison with lighter frameworks and optimization strategies.
 
