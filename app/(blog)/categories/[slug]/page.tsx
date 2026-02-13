@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import { MoreStories } from "@/app/(blog)/more-stories";
+import { MoreStoriesPosts } from "@/app/(blog)/more-stories";
 import {
   categoryQuery,
   CategoryQueryResponse,
@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }: Props) {
       </section>
 
       {posts && posts.length > 0 ? (
-        <MoreStories posts={posts} />
+        <MoreStoriesPosts posts={posts} />
       ) : (
         <p className="text-center text-lg text-gray-500">
           No posts in this category yet.
