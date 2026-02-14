@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  experimental: {
-    // Used to guard against accidentally leaking SANITY_API_READ_TOKEN to the browser
-    taint: true,
-  },
+  // Removed experimental taint feature due to Turbopack compatibility issues
+  // The SANITY_API_READ_TOKEN is protected by server-only module imports
   logging: {
     fetches: { fullUrl: false },
   },
