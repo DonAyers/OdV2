@@ -9,6 +9,7 @@ import CoverImage from "../../cover-image";
 import DateComponent from "../../date";
 import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
+import { CategoryTag } from "../../category-tag";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
@@ -99,6 +100,7 @@ export default async function PostPage({ params }: Props) {
               <DateComponent dateString={post.date} />
             </div>
           </div>
+          <CategoryTag category={post.category} tags={post.tags} />
         </div>
         {post.content?.length && (
           <PortableText className="mx-auto max-w-2xl" value={post.content} />

@@ -7,6 +7,7 @@ import DateComponent from "./date";
 import MoreStories from "./more-stories";
 import Onboarding from "./onboarding";
 import PortableText from "./portable-text";
+import { CategoryTag } from "./category-tag";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -45,9 +46,11 @@ function HeroPost({
   coverImage,
   date,
   author,
+  category,
+  tags,
 }: Pick<
   Post,
-  "title" | "coverImage" | "date" | "excerpt" | "author" | "slug"
+  "title" | "coverImage" | "date" | "excerpt" | "author" | "slug" | "category" | "tags"
 >) {
   return (
     <article>
@@ -64,6 +67,7 @@ function HeroPost({
           <div className="mb-4 text-lg md:mb-0">
             <DateComponent dateString={date} />
           </div>
+          <CategoryTag category={category} tags={tags} />
         </div>
         <div>
           {excerpt && (
@@ -97,6 +101,8 @@ export default async function Page() {
           excerpt={heroPost.excerpt}
           date={heroPost.date}
           author={heroPost.author}
+          category={heroPost.category}
+          tags={heroPost.tags}
         />
       ) : (
         <Onboarding />

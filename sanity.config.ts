@@ -14,6 +14,8 @@ import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
 import { assistWithPresets } from "@/sanity/plugins/assist";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
+import category from "@/sanity/schemas/documents/category";
+import tag from "@/sanity/schemas/documents/tag";
 import settings from "@/sanity/schemas/singletons/settings";
 
 export default defineConfig({
@@ -27,6 +29,8 @@ export default defineConfig({
       // Documents
       post,
       author,
+      category,
+      tag,
     ],
   },
   plugins: [

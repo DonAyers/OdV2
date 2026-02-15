@@ -13,6 +13,20 @@ export interface Author {
   name: string;
   picture?: (Image & { alt?: string | null }) | null;
 }
+
+export interface Category {
+  _id: string;
+  title: string;
+  slug: string;
+  description?: string | null;
+}
+
+export interface Tag {
+  _id: string;
+  title: string;
+  slug: string;
+}
+
 export interface Post {
   _id: string;
   status: "draft" | "published";
@@ -22,6 +36,8 @@ export interface Post {
   coverImage?: (Image & { alt?: string }) | null;
   date: string;
   author?: Author | null;
+  category?: Category | null;
+  tags?: Tag[] | null;
 }
 
 const postFields = groq`
@@ -33,6 +49,8 @@ const postFields = groq`
   coverImage,
   "date": coalesce(date, _updatedAt),
   "author": author->{"name": coalesce(name, "Anonymous"), picture},
+  "category": category->{_id, title, "slug": slug.current, description},
+  "tags": tags[]->{ _id, title, "slug": slug.current},
 `;
 
 export const heroQuery = groq`*[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {
@@ -59,3 +77,51 @@ export type PostQueryResponse =
       content?: PortableTextBlock[] | null;
     })
   | null;
+
+export const postsByCategoryQuery = groq`*[_type == "post" && category->slug.current == $slug && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+  ${postFields}
+}`;
+export type PostsByCategoryQueryResponse = Post[] | null;
+
+export const postsByTagQuery = groq`*[_type == "post" && $slug in tags[]->slug.current && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+  ${postFields}
+}`;
+export type PostsByTagQueryResponse = Post[] | null;
+
+export const categoriesQuery = groq`*[_type == "category"] | order(title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  "postCount": count(*[_type == "post" && references(^._id)])
+}`;
+export interface CategoryWithCount extends Category {
+  postCount: number;
+}
+export type CategoriesQueryResponse = CategoryWithCount[] | null;
+
+export const tagsQuery = groq`*[_type == "tag"] | order(title asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  "postCount": count(*[_type == "post" && references(^._id)])
+}`;
+export interface TagWithCount extends Tag {
+  postCount: number;
+}
+export type TagsQueryResponse = TagWithCount[] | null;
+
+export const categoryQuery = groq`*[_type == "category" && slug.current == $slug] [0] {
+  _id,
+  title,
+  "slug": slug.current,
+  description
+}`;
+export type CategoryQueryResponse = Category | null;
+
+export const tagQuery = groq`*[_type == "tag" && slug.current == $slug] [0] {
+  _id,
+  title,
+  "slug": slug.current
+}`;
+export type TagQueryResponse = Tag | null;
