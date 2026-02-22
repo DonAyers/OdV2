@@ -5,18 +5,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
-  "env": {
-    "NEXT_PUBLIC_SANITY_PROJECT_ID": "@sanity_project_id",
-    "NEXT_PUBLIC_SANITY_DATASET": "@sanity_dataset",
-    "SANITY_API_READ_TOKEN": "@sanity_read_token"
-  },
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_SANITY_PROJECT_ID": "@sanity_project_id",
-      "NEXT_PUBLIC_SANITY_DATASET": "@sanity_dataset",
-      "SANITY_API_READ_TOKEN": "@sanity_read_token"
-    }
-  },
   "headers": [
     {
       "source": "/(.*)",
