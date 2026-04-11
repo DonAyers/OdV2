@@ -1,0 +1,17 @@
+---
+import { languages } from '../i18n/ui';
+import { getLangFromUrl, getOtherLang } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const otherLang = getOtherLang(lang);
+const currentPath = Astro.url.pathname;
+const otherPath = currentPath.replace(`/${lang}`, `/${otherLang}`);
+---
+
+<a
+  href={otherPath}
+  class="text-sm px-3 py-1 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+  title={languages[otherLang]}
+>
+  {languages[otherLang]}
+</a>

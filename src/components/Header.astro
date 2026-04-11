@@ -1,0 +1,24 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<header class="bg-white border-b border-gray-200">
+  <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href={getLocalizedPath(lang, '/')} class="text-xl font-bold text-gray-900 hover:text-primary-600 transition-colors">
+      {t('site.title')}
+    </a>
+    <div class="flex items-center gap-6">
+      <a href={getLocalizedPath(lang, '/')} class="text-gray-600 hover:text-gray-900 transition-colors">
+        {t('nav.home')}
+      </a>
+      <a href={getLocalizedPath(lang, '/blog')} class="text-gray-600 hover:text-gray-900 transition-colors">
+        {t('nav.blog')}
+      </a>
+      <LanguageSwitcher />
+    </div>
+  </nav>
+</header>

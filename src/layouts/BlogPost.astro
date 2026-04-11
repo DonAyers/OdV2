@@ -1,0 +1,72 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath, getOtherLang } from '../i18n/utils';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  category?: string;
+  tags?: string[];
+  heroImage?: string;
+  translationSlug: string;
+}
+
+const { title, description, pubDate, updatedDate, category, tags, heroImage, translationSlug } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const otherLang = getOtherLang(lang);
+
+// Find the translated version
+const allPosts = await getCollection('blog');
+const translatedPost = allPosts.find(
+  (p) => p.data.translationSlug === translationSlug && p.data.lang === otherLang
+);
+const translatedSlug = translatedPost ? translatedPost.id.split('/').slice(1).join('/').replace(/\.(md|mdx)$/, '') : null;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="max-w-3xl mx-auto px-4 py-8">
+    <div class="mb-8">
+      <a href={getLocalizedPath(lang, '/blog')} class="text-primary-600 hover:text-primary-700 text-sm transition-colors">
+        {t('blog.backToBlog')}
+      </a>
+    </div>
+
+    {heroImage && (
+      <img src={heroImage} alt={title} class="w-full rounded-lg mb-8 shadow-sm" />
+    )}
+
+    <header class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h1>
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+        <span>{t('blog.publishedOn')} <FormattedDate date={pubDate} lang={lang} /></span>
+        {category && <span class="bg-gray-100 px-2 py-1 rounded text-xs uppercase tracking-wide">{category}</span>}
+      </div>
+      {translatedSlug && (
+        <a
+          href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
+          class="inline-block mt-4 text-sm text-primary-600 hover:text-primary-700 border border-primary-200 rounded-full px-3 py-1 transition-colors"
+        >
+          {t('blog.readInLang')}
+        </a>
+      )}
+    </header>
+
+    <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600">
+      <slot />
+    </div>
+
+    {tags && tags.length > 0 && (
+      <div class="mt-8 pt-4 border-t border-gray-200">
+        <span class="text-sm text-gray-500 mr-2">{t('blog.tags')}:</span>
+        {tags.map((tag) => (
+          <span class="inline-block text-xs bg-gray-100 text-gray-600 rounded px-2 py-1 mr-1 mb-1">{tag}</span>
+        ))}
+      </div>
+    )}
+  </article>
+</BaseLayout>

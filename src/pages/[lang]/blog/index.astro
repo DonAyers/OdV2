@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FormattedDate from '../../../components/FormattedDate.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../../i18n/utils';
+import { getCollection } from 'astro:content';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'it' } }];
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter((post) => post.data.lang === lang)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`${t('blog.title')} - ${t('site.title')}`} description={t('site.description')}>
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">{t('blog.title')}</h1>
+
+    {posts.length === 0 ? (
+      <p class="text-gray-500">{t('blog.noPosts')}</p>
+    ) : (
+      <ul class="space-y-8">
+        {posts.map((post) => {
+          const slug = post.id.split('/').slice(1).join('/').replace(/\.(md|mdx)$/, '');
+          return (
+            <li class="border-b border-gray-100 pb-8 last:border-0">
+              <a href={getLocalizedPath(lang, `/blog/${slug}`)} class="group block">
+                <h2 class="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors mb-2">
+                  {post.data.title}
+                </h2>
+                <div class="text-sm text-gray-500 mb-2">
+                  <FormattedDate date={post.data.pubDate} lang={lang} />
+                  {post.data.category && (
+                    <span class="ml-2 bg-gray-100 px-2 py-0.5 rounded text-xs uppercase tracking-wide">{post.data.category}</span>
+                  )}
+                </div>
+                {post.data.description && (
+                  <p class="text-gray-600">{post.data.description}</p>
+                )}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    )}
+  </div>
+</BaseLayout>
