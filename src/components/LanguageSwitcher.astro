@@ -18,6 +18,6 @@ const flags: Record<string, string> = { en: '🇬🇧', it: '🇮🇹' };
          transition-all duration-150"
   title={`Switch to ${languages[otherLang]}`}
 >
-  <span aria-hidden="true">{flags[otherLang]}</span>
-  <span class="hidden sm:inline">{otherLang.toUpperCase()}</span>
+  <span aria-hidden="true">{flags[lang]}</span>
+  <span class="hidden sm:inline">{lang.toUpperCase()}</span>
 </a>
