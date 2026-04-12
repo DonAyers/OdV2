@@ -1,57 +1,164 @@
+/* ─── Google Fonts ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=Inter:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply antialiased;
+  html {
+    scroll-behavior: smooth;
   }
 
+  body {
+    @apply antialiased bg-cream-100 text-ink-900;
+    font-family: 'Source Serif 4', Georgia, serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* ─── Prose / Article Body ──────────────────────────────────────────── */
+@layer components {
   .prose {
-    @apply text-gray-800 leading-relaxed;
+    @apply text-ink-800;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.85;
+  }
+
+  .prose > * + * {
+    @apply mt-5;
   }
 
   .prose h2 {
-    @apply text-2xl font-bold mt-8 mb-4;
+    font-family: 'Playfair Display', Georgia, serif;
+    @apply text-2xl font-semibold text-ink-900 mt-12 mb-4 leading-snug;
   }
 
   .prose h3 {
-    @apply text-xl font-semibold mt-6 mb-3;
+    font-family: 'Playfair Display', Georgia, serif;
+    @apply text-xl font-semibold text-ink-800 mt-8 mb-3 leading-snug;
   }
 
   .prose p {
-    @apply mb-4;
+    @apply mb-5;
   }
 
   .prose a {
-    @apply text-primary-600 underline hover:text-primary-700;
+    @apply text-terra-600 underline decoration-terra-300 underline-offset-2
+           hover:text-terra-700 hover:decoration-terra-500 transition-colors;
   }
 
-  .prose ul, .prose ol {
-    @apply mb-4 pl-6;
+  .prose strong {
+    @apply font-semibold text-ink-900;
+  }
+
+  .prose em {
+    @apply italic;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6 mb-5 space-y-1;
+  }
+
+  .prose ol {
+    @apply list-decimal pl-6 mb-5 space-y-1;
   }
 
   .prose li {
-    @apply mb-2;
+    @apply leading-relaxed;
   }
 
   .prose blockquote {
-    @apply border-l-4 border-gray-200 pl-4 italic text-gray-600 my-4;
+    @apply border-l-4 border-terra-300 pl-5 my-8 italic text-ink-600;
+    font-size: 1.2rem;
+    line-height: 1.7;
   }
 
   .prose img {
-    @apply rounded-lg shadow-sm my-6;
+    @apply rounded-xl shadow-md my-8 w-full object-cover;
+  }
+
+  .prose hr {
+    @apply border-cream-300 my-10;
   }
 
   .prose code {
-    @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm;
+    @apply bg-cream-200 text-ink-800 px-1.5 py-0.5 rounded text-sm;
+    font-family: 'Courier New', monospace;
   }
 
   .prose pre {
-    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6;
+    @apply bg-ink-900 text-cream-100 p-5 rounded-xl overflow-x-auto my-8 text-sm;
+    font-family: 'Courier New', monospace;
   }
 
   .prose pre code {
     @apply bg-transparent p-0;
   }
+}
+
+/* ─── Post Card ──────────────────────────────────────────────────────── */
+@layer components {
+  .post-card {
+    @apply block bg-white rounded-2xl overflow-hidden shadow-sm
+           border border-cream-200 hover:shadow-md hover:border-cream-300
+           transition-all duration-200;
+  }
+
+  .post-card-body {
+    @apply p-6;
+  }
+
+  .post-card-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    @apply text-xl font-semibold text-ink-900 leading-snug mb-2
+           group-hover:text-terra-700 transition-colors;
+  }
+
+  .category-badge {
+    @apply inline-block text-xs font-semibold uppercase tracking-widest
+           px-2.5 py-0.5 rounded-full;
+  }
+
+  .category-badge-oddities {
+    @apply bg-terra-100 text-terra-700;
+  }
+
+  .category-badge-americas {
+    @apply bg-sage-100 text-sage-700;
+  }
+
+  .tag-pill {
+    @apply inline-block text-xs bg-cream-200 text-ink-600 rounded-full
+           px-2.5 py-0.5 hover:bg-cream-300 transition-colors;
+  }
+}
+
+/* ─── Nav Link ───────────────────────────────────────────────────────── */
+@layer components {
+  .nav-link {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply text-sm font-medium text-ink-600 hover:text-ink-900 transition-colors
+           relative after:absolute after:bottom-[-2px] after:left-0 after:right-0
+           after:h-0.5 after:bg-terra-400 after:scale-x-0 after:origin-left
+           after:transition-transform hover:after:scale-x-100;
+  }
+
+  .nav-link-active {
+    @apply text-ink-900 after:scale-x-100;
+  }
+}
+
+/* ─── Decorative divider ─────────────────────────────────────────────── */
+.section-divider {
+  @apply flex items-center gap-4 text-cream-300 my-12;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  @apply flex-1 border-t border-cream-300;
 }

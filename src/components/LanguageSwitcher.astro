@@ -6,12 +6,18 @@ const lang = getLangFromUrl(Astro.url);
 const otherLang = getOtherLang(lang);
 const currentPath = Astro.url.pathname;
 const otherPath = currentPath.replace(`/${lang}`, `/${otherLang}`);
+
+const flags: Record<string, string> = { en: '🇬🇧', it: '🇮🇹' };
 ---
 
 <a
   href={otherPath}
-  class="text-sm px-3 py-1 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
-  title={languages[otherLang]}
+  class="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-full
+         bg-cream-200 text-ink-700 hover:bg-terra-100 hover:text-terra-800
+         border border-cream-300 hover:border-terra-300
+         transition-all duration-150"
+  title={`Switch to ${languages[otherLang]}`}
 >
-  {languages[otherLang]}
+  <span aria-hidden="true">{flags[otherLang]}</span>
+  <span class="hidden sm:inline">{otherLang.toUpperCase()}</span>
 </a>

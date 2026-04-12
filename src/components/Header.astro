@@ -4,21 +4,46 @@ import LanguageSwitcher from './LanguageSwitcher.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const currentPath = Astro.url.pathname;
+
+const isActive = (path: string) =>
+  currentPath === getLocalizedPath(lang, path) ||
+  (path === '/blog' && currentPath.startsWith(getLocalizedPath(lang, '/blog')));
 ---
 
-<header class="bg-white border-b border-gray-200">
-  <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-    <a href={getLocalizedPath(lang, '/')} class="text-xl font-bold text-gray-900 hover:text-primary-600 transition-colors">
-      {t('site.title')}
-    </a>
-    <div class="flex items-center gap-6">
-      <a href={getLocalizedPath(lang, '/')} class="text-gray-600 hover:text-gray-900 transition-colors">
-        {t('nav.home')}
+<header class="bg-cream-50 border-b border-cream-200 sticky top-0 z-50 backdrop-blur-sm bg-cream-50/95">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <nav class="flex items-center justify-between h-16">
+
+      <!-- Brand / Logo -->
+      <a href={getLocalizedPath(lang, '/')} class="flex items-center gap-2 group" aria-label={t('site.title')}>
+        <span class="text-2xl" aria-hidden="true">🌍</span>
+        <div class="leading-none">
+          <span
+            class="font-serif text-lg font-semibold text-ink-900 group-hover:text-terra-700 transition-colors tracking-tight"
+          >
+            Od's Travel Log
+          </span>
+        </div>
       </a>
-      <a href={getLocalizedPath(lang, '/blog')} class="text-gray-600 hover:text-gray-900 transition-colors">
-        {t('nav.blog')}
-      </a>
-      <LanguageSwitcher />
-    </div>
-  </nav>
+
+      <!-- Nav links -->
+      <div class="flex items-center gap-6">
+        <a
+          href={getLocalizedPath(lang, '/')}
+          class:list={['nav-link', { 'nav-link-active': currentPath === getLocalizedPath(lang, '/') }]}
+        >
+          {t('nav.home')}
+        </a>
+        <a
+          href={getLocalizedPath(lang, '/blog')}
+          class:list={['nav-link', { 'nav-link-active': isActive('/blog') }]}
+        >
+          {t('nav.blog')}
+        </a>
+        <LanguageSwitcher />
+      </div>
+
+    </nav>
+  </div>
 </header>

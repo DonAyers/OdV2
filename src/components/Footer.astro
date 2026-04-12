@@ -1,13 +1,38 @@
 ---
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-gray-50 border-t border-gray-200 mt-auto">
-  <div class="max-w-4xl mx-auto px-4 py-8 text-center text-gray-500 text-sm">
-    <p>&copy; {year} {t('site.title')}. {t('footer.rights')}</p>
+<footer class="bg-ink-900 text-cream-100 mt-auto">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xl" aria-hidden="true">🌍</span>
+          <span class="font-serif text-lg font-semibold text-cream-100">Od's Travel Log</span>
+        </div>
+        <p class="text-sm text-ink-300 max-w-xs">{t('site.description')}</p>
+      </div>
+
+      <!-- Nav -->
+      <nav class="flex flex-col sm:flex-row gap-4 text-sm">
+        <a href={getLocalizedPath(lang, '/')} class="text-ink-300 hover:text-cream-100 transition-colors">
+          {t('nav.home')}
+        </a>
+        <a href={getLocalizedPath(lang, '/blog')} class="text-ink-300 hover:text-cream-100 transition-colors">
+          {t('nav.blog')}
+        </a>
+      </nav>
+
+    </div>
+
+    <div class="border-t border-ink-700 mt-8 pt-6 text-xs text-ink-400 text-center">
+      &copy; {year} Barbara Burgio &mdash; Od's Travel Log. {t('footer.rights')}
+    </div>
   </div>
 </footer>

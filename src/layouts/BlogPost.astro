@@ -20,53 +20,124 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const otherLang = getOtherLang(lang);
 
-// Find the translated version
 const allPosts = await getCollection('blog');
 const translatedPost = allPosts.find(
   (p) => p.data.translationSlug === translationSlug && p.data.lang === otherLang
 );
-const translatedSlug = translatedPost ? translatedPost.id.split('/').slice(1).join('/').replace(/\.(md|mdx)$/, '') : null;
+const translatedSlug = translatedPost
+  ? translatedPost.id.split('/').slice(1).join('/').replace(/\.(md|mdx)$/, '')
+  : null;
+
+const flags: Record<string, string> = { en: '🇬🇧', it: '🇮🇹' };
+
+function categoryClass(cat?: string) {
+  if (cat === 'americas') return 'category-badge category-badge-americas';
+  return 'category-badge category-badge-oddities';
+}
 ---
 
-<BaseLayout title={title} description={description}>
-  <article class="max-w-3xl mx-auto px-4 py-8">
-    <div class="mb-8">
-      <a href={getLocalizedPath(lang, '/blog')} class="text-primary-600 hover:text-primary-700 text-sm transition-colors">
-        {t('blog.backToBlog')}
-      </a>
-    </div>
+<BaseLayout title={`${title} — Od's Travel Log`} description={description}>
 
+  <!-- Breadcrumb / back link -->
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-2">
+    <a
+      href={getLocalizedPath(lang, '/blog')}
+      class="inline-flex items-center gap-1.5 text-sm text-ink-400 hover:text-terra-600 transition-colors font-sans"
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 3L5 8l5 5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      {t('blog.backToBlog')}
+    </a>
+  </div>
+
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 pb-20">
+
+    <!-- Hero image -->
     {heroImage && (
-      <img src={heroImage} alt={title} class="w-full rounded-lg mb-8 shadow-sm" />
+      <div class="my-6 rounded-2xl overflow-hidden shadow-md aspect-video bg-cream-200">
+        <img src={heroImage} alt={title} class="w-full h-full object-cover" />
+      </div>
     )}
 
-    <header class="mb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{title}</h1>
-      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-        <span>{t('blog.publishedOn')} <FormattedDate date={pubDate} lang={lang} /></span>
-        {category && <span class="bg-gray-100 px-2 py-1 rounded text-xs uppercase tracking-wide">{category}</span>}
+    <!-- Article header -->
+    <header class="py-8 border-b border-cream-200 mb-10">
+
+      <!-- Meta row -->
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        {category && (
+          <span class={categoryClass(category)}>{category}</span>
+        )}
+        <span class="text-ink-400 text-sm font-sans">
+          {t('blog.publishedOn')} <FormattedDate date={pubDate} lang={lang} />
+        </span>
+        {updatedDate && (
+          <span class="text-ink-400 text-sm font-sans italic">
+            (updated <FormattedDate date={updatedDate} lang={lang} />)
+          </span>
+        )}
       </div>
+
+      <!-- Title -->
+      <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-4">
+        {title}
+      </h1>
+
+      {description && (
+        <p class="text-lg text-ink-500 leading-relaxed font-body italic">{description}</p>
+      )}
+
+      <!-- Translation link -->
       {translatedSlug && (
         <a
           href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
-          class="inline-block mt-4 text-sm text-primary-600 hover:text-primary-700 border border-primary-200 rounded-full px-3 py-1 transition-colors"
+          class="inline-flex items-center gap-2 mt-5 text-sm font-sans font-medium
+                 px-4 py-2 bg-cream-200 hover:bg-terra-100 text-ink-700 hover:text-terra-800
+                 border border-cream-300 hover:border-terra-300 rounded-full transition-all"
         >
+          <span aria-hidden="true">{flags[otherLang]}</span>
           {t('blog.readInLang')}
         </a>
       )}
     </header>
 
-    <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary-600">
+    <!-- Article body -->
+    <div class="prose">
       <slot />
     </div>
 
+    <!-- Tags -->
     {tags && tags.length > 0 && (
-      <div class="mt-8 pt-4 border-t border-gray-200">
-        <span class="text-sm text-gray-500 mr-2">{t('blog.tags')}:</span>
-        {tags.map((tag) => (
-          <span class="inline-block text-xs bg-gray-100 text-gray-600 rounded px-2 py-1 mr-1 mb-1">{tag}</span>
-        ))}
+      <footer class="mt-10 pt-6 border-t border-cream-200">
+        <p class="text-xs font-sans font-semibold uppercase tracking-widest text-ink-400 mb-3">
+          {t('blog.tags')}
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag: string) => (
+            <span class="tag-pill">{tag}</span>
+          ))}
+        </div>
+      </footer>
+    )}
+
+    <!-- Bottom translation prompt -->
+    {translatedSlug && (
+      <div class="mt-10 p-5 bg-cream-200 rounded-2xl border border-cream-300 flex items-center justify-between gap-4 flex-wrap">
+        <p class="text-sm text-ink-600 font-sans">
+          {lang === 'en'
+            ? 'This post is also available in Italian.'
+            : 'Questo articolo è disponibile anche in Inglese.'}
+        </p>
+        <a
+          href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
+          class="inline-flex items-center gap-2 text-sm font-sans font-semibold px-4 py-2
+                 bg-terra-500 hover:bg-terra-600 text-white rounded-full transition-colors whitespace-nowrap"
+        >
+          <span aria-hidden="true">{flags[otherLang]}</span>
+          {t('blog.readInLang')}
+        </a>
       </div>
     )}
+
   </article>
 </BaseLayout>
