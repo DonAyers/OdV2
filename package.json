@@ -8,7 +8,10 @@
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
     "dev:site": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/build-site.mjs",
+    "build:site": "astro build",
+    "build:admin": "tinacms build",
+    "build:admin:local": "tinacms build --local --skip-cloud-checks",
     "preview": "astro preview"
   },
   "dependencies": {
