@@ -4,6 +4,7 @@ description: "Od a trovato il modello di questa barca a vela nel parco di Cal An
 pubDate: 2015-02-10
 category: oddities
 tags: [parco, capitol hill, battle star, cal anderson, Seattle]
+heroImage: "/wp-content/uploads/2015/02/224811_4115931625835_252579847_n.jpg"
 lang: it
 translationSlug: battle-star-anderson
 ---

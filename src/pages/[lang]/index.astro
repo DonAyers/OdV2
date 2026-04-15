@@ -69,11 +69,20 @@ function getSlug(id: string) {
         class="group block bg-white rounded-3xl overflow-hidden shadow-sm border border-cream-200
                hover:shadow-lg transition-all duration-300 md:flex"
       >
-        <!-- Featured image placeholder with category color -->
-        <div class="md:w-72 md:flex-shrink-0 bg-gradient-to-br from-terra-100 to-cream-200 flex items-center justify-center min-h-40 md:min-h-full">
-          <span class="text-6xl opacity-60" aria-hidden="true">
-            {featured.data.category === 'americas' ? '🌎' : '🔭'}
-          </span>
+        <div class="md:w-72 md:flex-shrink-0 min-h-40 md:min-h-full bg-gradient-to-br from-terra-100 to-cream-200 overflow-hidden">
+          {featured.data.heroImage ? (
+            <img
+              src={featured.data.heroImage}
+              alt={featured.data.title}
+              class="w-full h-full object-cover"
+            />
+          ) : (
+            <div class="w-full h-full flex items-center justify-center">
+              <span class="text-6xl opacity-60" aria-hidden="true">
+                {featured.data.category === 'americas' ? '🌎' : '🔭'}
+              </span>
+            </div>
+          )}
         </div>
         <div class="p-8 flex flex-col justify-center flex-1">
           <div class="flex items-center gap-3 mb-3">

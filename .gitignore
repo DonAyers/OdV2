@@ -17,5 +17,13 @@ pnpm-debug.log*
 # astro
 .astro/
 
+# tina
+tina/__generated__/
+public/admin/
+
 # macOS
 .DS_Store
+
+# local workspace
+.vscode/
+odbu.gz

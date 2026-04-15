@@ -4,6 +4,7 @@ description: "(Italian beers from Elav Brewery http://www.elavbrewery.com/en/) W
 pubDate: 2015-03-02
 category: oddities
 tags: [maine, iceland, doritos, lobster, globalization, pizza, new england, pepperoni, sandwich, lobster roll, cool ranch, cool american, salad dressings, tacos]
+heroImage: "/wp-content/uploads/2015/03/C360_2012-08-28-11-39-25.jpg"
 lang: en
 translationSlug: tuh-mey-toh-tuh-mah-toh
 ---
@@ -16,7 +17,7 @@ We live in a world where globalization rules the planet. International culture i
 
 Iceland was surprisingly fun that way, mixing the American pepperoni obsession with a Latin staple to name this ham and cheese sandwich.
 
-[![Camera 360](http://www.odstravellog.com/wp-content/uploads/2015/03/C360_2012-07-18-08-32-41-2-300x165.jpg)](http://www.odstravellog.com/wp-content/uploads/2015/03/C360_2012-07-18-08-32-41-2.jpg)
+[![Camera 360](/wp-content/uploads/2015/03/C360_2012-07-18-08-32-41-2-300x165.jpg)](/wp-content/uploads/2015/03/C360_2012-07-18-08-32-41-2.jpg)
 
 ♠
 
@@ -28,7 +29,7 @@ Americans love this buttermilk-garlic dressing so much that they try to use it a
 
 Apparently Iceland do agree with them so much so,  they renamed this product to glorify their inventors.
 
-[![Camera 360](http://www.odstravellog.com/wp-content/uploads/2015/03/C360_2012-07-18-08-38-29-2-204x300.jpg)](http://www.odstravellog.com/wp-content/uploads/2015/03/C360_2012-07-18-08-38-29-2.jpg)
+[![Camera 360](/wp-content/uploads/2015/03/C360_2012-07-18-08-38-29-2-204x300.jpg)](/wp-content/uploads/2015/03/C360_2012-07-18-08-38-29-2.jpg)
 
 ♣
 
@@ -38,4 +39,4 @@ Well, someone in New England did and didn’t stop there. They took the lobster,
 
 Driving around Manchester, Maine, we found a place that served them along with Pizza. Although, at this place, the two items were sold separately, one can dare to order them together
 
-[![Camera 360](http://www.odstravellog.com/wp-content/uploads/2015/03/C360_2012-07-11-18-05-35-2-188x300.jpg)](http://www.odstravellog.com/wp-content/uploads/2015/03/C360_2012-07-11-18-05-35-2.jpg)
+[![Camera 360](/wp-content/uploads/2015/03/C360_2012-07-11-18-05-35-2-188x300.jpg)](/wp-content/uploads/2015/03/C360_2012-07-11-18-05-35-2.jpg)

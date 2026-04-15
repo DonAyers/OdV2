@@ -4,6 +4,7 @@ description: "Od found this sailboat model at Cal Anderson Park in Seattle. This
 pubDate: 2015-02-10
 category: oddities
 tags: [Seattle, cal anderson, battle star, park, capitol hill]
+heroImage: "/wp-content/uploads/2015/02/224811_4115931625835_252579847_n.jpg"
 lang: en
 translationSlug: battle-star-anderson
 ---
