@@ -1,8 +1,16 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import BlogPostVisual from '../components/BlogPostVisual';
 import { getLangFromUrl, useTranslations, getLocalizedPath, getOtherLang } from '../i18n/utils';
 import { getCollection } from 'astro:content';
+import type { BlogQuery, BlogQueryVariables } from '../../tina/__generated__/types';
+
+interface TinaProps {
+  query: string;
+  variables: BlogQueryVariables;
+  data: BlogQuery;
+}
 
 interface Props {
   title: string;
@@ -13,9 +21,10 @@ interface Props {
   tags?: string[];
   heroImage?: string;
   translationSlug: string;
+  tinaProps?: TinaProps | null;
 }
 
-const { title, description, pubDate, updatedDate, category, tags, heroImage, translationSlug } = Astro.props;
+const { title, description, pubDate, updatedDate, category, tags, heroImage, translationSlug, tinaProps } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const otherLang = getOtherLang(lang);
@@ -51,93 +60,114 @@ function categoryClass(cat?: string) {
     </a>
   </div>
 
-  <article class="max-w-3xl mx-auto px-4 sm:px-6 pb-20">
-
-    <!-- Hero image -->
-    {heroImage && (
-      <div class="my-6 rounded-2xl overflow-hidden shadow-md aspect-video bg-cream-200">
-        <img src={heroImage} alt={title} class="w-full h-full object-cover" />
-      </div>
-    )}
-
-    <!-- Article header -->
-    <header class="py-8 border-b border-cream-200 mb-10">
-
-      <!-- Meta row -->
-      <div class="flex flex-wrap items-center gap-3 mb-4">
-        {category && (
-          <span class={categoryClass(category)}>{category}</span>
-        )}
-        <span class="text-ink-400 text-sm font-sans">
-          {t('blog.publishedOn')} <FormattedDate date={pubDate} lang={lang} />
-        </span>
-        {updatedDate && (
-          <span class="text-ink-400 text-sm font-sans italic">
-            (updated <FormattedDate date={updatedDate} lang={lang} />)
-          </span>
-        )}
-      </div>
-
-      <!-- Title -->
-      <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-4">
-        {title}
-      </h1>
-
-      {description && (
-        <p class="text-lg text-ink-500 leading-relaxed font-body italic">{description}</p>
-      )}
-
-      <!-- Translation link -->
-      {translatedSlug && (
-        <a
-          href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
-          class="inline-flex items-center gap-2 mt-5 text-sm font-sans font-medium
-                 px-4 py-2 bg-cream-200 hover:bg-terra-100 text-ink-700 hover:text-terra-800
-                 border border-cream-300 hover:border-terra-300 rounded-full transition-all"
-        >
-          <span aria-hidden="true">{flags[otherLang]}</span>
-          {t('blog.readInLang')}
-        </a>
-      )}
-    </header>
-
-    <!-- Article body -->
-    <div class="prose">
-      <slot />
-    </div>
-
-    <!-- Tags -->
-    {tags && tags.length > 0 && (
-      <footer class="mt-10 pt-6 border-t border-cream-200">
-        <p class="text-xs font-sans font-semibold uppercase tracking-widest text-ink-400 mb-3">
-          {t('blog.tags')}
-        </p>
-        <div class="flex flex-wrap gap-2">
-          {tags.map((tag: string) => (
-            <span class="tag-pill">{tag}</span>
-          ))}
-        </div>
-      </footer>
-    )}
-
-    <!-- Bottom translation prompt -->
-    {translatedSlug && (
-      <div class="mt-10 p-5 bg-cream-200 rounded-2xl border border-cream-300 flex items-center justify-between gap-4 flex-wrap">
-        <p class="text-sm text-ink-600 font-sans">
-          {lang === 'en'
+  {tinaProps ? (
+    <BlogPostVisual
+      client:tina
+      {...tinaProps}
+      lang={lang}
+      publishedLabel={t('blog.publishedOn')}
+      updatedLabel="updated"
+      tagsLabel={t('blog.tags')}
+      readInLangLabel={t('blog.readInLang')}
+      translatedHref={translatedSlug ? getLocalizedPath(otherLang, `/blog/${translatedSlug}`) : null}
+      otherLangFlag={flags[otherLang]}
+      bottomTranslationText={
+        translatedSlug
+          ? lang === 'en'
             ? 'This post is also available in Italian.'
-            : 'Questo articolo è disponibile anche in Inglese.'}
-        </p>
-        <a
-          href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
-          class="inline-flex items-center gap-2 text-sm font-sans font-semibold px-4 py-2
-                 bg-terra-500 hover:bg-terra-600 text-white rounded-full transition-colors whitespace-nowrap"
-        >
-          <span aria-hidden="true">{flags[otherLang]}</span>
-          {t('blog.readInLang')}
-        </a>
-      </div>
-    )}
+            : 'Questo articolo è disponibile anche in Inglese.'
+          : undefined
+      }
+    />
+  ) : (
+    <article class="max-w-3xl mx-auto px-4 sm:px-6 pb-20">
 
-  </article>
+      <!-- Hero image -->
+      {heroImage && (
+        <div class="my-6 rounded-2xl overflow-hidden shadow-md aspect-video bg-cream-200">
+          <img src={heroImage} alt={title} class="w-full h-full object-cover" />
+        </div>
+      )}
+
+      <!-- Article header -->
+      <header class="py-8 border-b border-cream-200 mb-10">
+
+        <!-- Meta row -->
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          {category && (
+            <span class={categoryClass(category)}>{category}</span>
+          )}
+          <span class="text-ink-400 text-sm font-sans">
+            {t('blog.publishedOn')} <FormattedDate date={pubDate} lang={lang} />
+          </span>
+          {updatedDate && (
+            <span class="text-ink-400 text-sm font-sans italic">
+              (updated <FormattedDate date={updatedDate} lang={lang} />)
+            </span>
+          )}
+        </div>
+
+        <!-- Title -->
+        <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-ink-900 leading-tight mb-4">
+          {title}
+        </h1>
+
+        {description && (
+          <p class="text-lg text-ink-500 leading-relaxed font-body italic">{description}</p>
+        )}
+
+        <!-- Translation link -->
+        {translatedSlug && (
+          <a
+            href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
+            class="inline-flex items-center gap-2 mt-5 text-sm font-sans font-medium
+                   px-4 py-2 bg-cream-200 hover:bg-terra-100 text-ink-700 hover:text-terra-800
+                   border border-cream-300 hover:border-terra-300 rounded-full transition-all"
+          >
+            <span aria-hidden="true">{flags[otherLang]}</span>
+            {t('blog.readInLang')}
+          </a>
+        )}
+      </header>
+
+      <!-- Article body -->
+      <div class="prose">
+        <slot />
+      </div>
+
+      <!-- Tags -->
+      {tags && tags.length > 0 && (
+        <footer class="mt-10 pt-6 border-t border-cream-200">
+          <p class="text-xs font-sans font-semibold uppercase tracking-widest text-ink-400 mb-3">
+            {t('blog.tags')}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {tags.map((tag: string) => (
+              <span class="tag-pill">{tag}</span>
+            ))}
+          </div>
+        </footer>
+      )}
+
+      <!-- Bottom translation prompt -->
+      {translatedSlug && (
+        <div class="mt-10 p-5 bg-cream-200 rounded-2xl border border-cream-300 flex items-center justify-between gap-4 flex-wrap">
+          <p class="text-sm text-ink-600 font-sans">
+            {lang === 'en'
+              ? 'This post is also available in Italian.'
+              : 'Questo articolo è disponibile anche in Inglese.'}
+          </p>
+          <a
+            href={getLocalizedPath(otherLang, `/blog/${translatedSlug}`)}
+            class="inline-flex items-center gap-2 text-sm font-sans font-semibold px-4 py-2
+                   bg-terra-500 hover:bg-terra-600 text-white rounded-full transition-colors whitespace-nowrap"
+          >
+            <span aria-hidden="true">{flags[otherLang]}</span>
+            {t('blog.readInLang')}
+          </a>
+        </div>
+      )}
+
+    </article>
+  )}
 </BaseLayout>

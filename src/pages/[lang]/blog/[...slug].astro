@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BlogPost from '../../../layouts/BlogPost.astro';
+import { client } from '../../../../tina/__generated__/client';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -16,7 +17,17 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const relativePath = `${post.id}.md`;
+let tinaProps: Awaited<ReturnType<typeof client.queries.blog>> | null = null;
+
+try {
+  tinaProps = await client.queries.blog({ relativePath });
+} catch {
+  tinaProps = null;
+}
+
+const renderedPost = tinaProps ? null : await render(post);
+const Content = renderedPost?.Content;
 ---
 
 <BlogPost
@@ -28,6 +39,7 @@ const { Content } = await render(post);
   tags={post.data.tags}
   heroImage={post.data.heroImage}
   translationSlug={post.data.translationSlug}
+  tinaProps={tinaProps}
 >
-  <Content />
+  {Content && <Content />}
 </BlogPost>
